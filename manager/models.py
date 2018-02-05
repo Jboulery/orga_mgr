@@ -8,14 +8,20 @@ class Organization(models.Model):
     activity = models.CharField(max_length=500, default='')
     address = models.CharField(max_length=500, default='')
 
+    def __str__(self):
+        return self.name
+
 
 class Group(MPTTModel):
     name = models.CharField(max_length=50)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    parent = TreeForeignKey('self', null= True, blank=True, related_name='children', db_index=True, on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True, on_delete=models.CASCADE)
 
     class MPTTMeta:
         order_insertion_by = ['name']
+
+    def __str__(self):
+        return self.name
 
 
 class Person(models.Model):
@@ -30,4 +36,7 @@ class Person(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     date_of_birth = models.DateField()
     address = models.CharField(max_length=500, default='')
-    picture = models.URLField()
+    picture = models.URLField(default='', null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username

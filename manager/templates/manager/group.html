@@ -1,0 +1,33 @@
+{% extends 'manager/base.html' %}
+{% block title %}Manager{% endblock %}
+{% block manager %}active{% endblock %}
+
+{% block content %}
+<nav id="tree-path-navbar" class="navbar navbar-expand-md navbar-light col-sm-12">
+    <ul id="tree-path" class="nav navbar-nav mr-auto">
+        <li class="nav-item">
+            {% for ancestor in ancestors %}<a href="{% url 'group-index' ancestor.id %}" >{{ ancestor.name }}</a>&nbsp; &gt; &nbsp;{% endfor %}
+        </li>
+    </ul>
+    <ul id="tree-path-current-group" class="nav navbar-nav ml-auto">
+        {{ group.name }}
+    </ul>
+</nav>
+
+<div id="groups-wrapper" class="col-sm-12">
+    <div class="row">
+        {% for _ in "xxx" %}
+        {% for descendant in descendants %}
+            <a class="group-wrapper col-sm-3" href="{% url 'group-index' descendant.id %}">
+                <div class="group-name-wrapper">
+                    {{ descendant.name }}
+                </div>
+                <div class="group-picture-wrapper">
+                    picture
+                </div>
+            </a>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
