@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'manager/css/bootstrap.min.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="{% static 'manager/css/fontawesome-all.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'manager/css/base.css' %}">
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -44,7 +45,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="{% block manager %}{% endblock %}">
-                <a href="{% url 'group-index' 1 %}">Manager</a>
+                <a href="{% url 'manager:group-index' 1 %}">Manager</a>
             </li>
             <li class="{% block communication %}{% endblock %}">
                 <a href="#">Communication</a>
