@@ -63,3 +63,27 @@ def person_create(request, group_id):
         context = get_group_tree(group.id)
 
         return render(request, 'manager/group.html', context)
+
+
+def group_create(request):
+    if request.method == 'POST':
+        if request.POST['operation_type'] == 'create':
+            name = request.POST['group_name']
+            parent_id = int(request.POST['current_group_id'])
+            parent = Group.objects.get(pk=parent_id)
+            orga = parent.organization
+
+            Group.objects.create(name=name, parent=parent, organization=orga)
+
+            context = get_group_tree(parent_id)
+
+        elif request.POST['operation_type'] == 'update':
+            name = request.POST['group_name']
+            group_id = int(request.POST['current_group_id'])
+            group = Group.objects.get(pk=group_id)
+            group.name = name
+            group.save()
+
+            context = get_group_tree(group_id)
+
+        return render(request, 'manager/group.html', context)

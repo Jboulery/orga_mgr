@@ -10,55 +10,56 @@
                 {% for ancestor in ancestors %}<a href="{% url 'manager:group-index' ancestor.id %}" >{{ ancestor.name }}</a>&nbsp; &gt; &nbsp;{% endfor %}
             </div>
             <div class="row" id="tree-path-current-group">
-                {{ group.name }}
+                <div>
+                    {{ group.name }}&nbsp;
+                    <a id="group-update-button" type="button" data-toggle="modal" data-target="#groupModal" href="#" data-group="{{group.name}}"><i class="fas fa-pencil-alt"></i></a>&nbsp;
+                    <a href="#"><i class="fas fa-times"></i></a>
+                </div>
             </div>
         </li>
     </ul>
-    <ul id="tree-path-actions" class="nav navbar-nav ml-auto col-sm-1">
+    <ul id="tree-path-actions" class="nav navbar-nav ml-auto col-sm-3 justify-content-end">
         <li class="nav-item">
-            <a href="{% url 'manager:person-create' group_id=group.id %}"><button class="btn btn-sm btn-light"><i class="fas fa-user-plus"></i></button></a>
+            <div>
+                <a id="group-create-button" type="button" data-toggle="modal" data-target="#groupModal" href="#"><i class="fas fa-plus"></i></a>&nbsp;
+                <a href="{% url 'manager:person-create' group_id=group.id %}"><i class="fas fa-user-plus"></i></a>
+            </div>
         </li>&nbsp;
-        <li class="nav-item">
-            <a href="#"><button class="btn btn-sm btn-light"><i class="fas fa-pencil-alt"></i></button></a>
-        </li>&nbsp;
-        <li class="nav-item">
-            <a href="#"><button class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button></a>
-        </li>
     </ul>
 </nav>
 
 <div id="groups-wrapper" class="col-sm-12">
     <div class="row">
-        {% for _ in "xxxxx" %}
-            {% for descendant in descendants %}
-                <div class="group-wrapper align-self-start">
-                    <a href="{% url 'manager:group-index' descendant.id %}">
-                        <div class="group-name-wrapper">
-                            {{ descendant.name }}
-                        </div>
-                        <div class="group-picture-wrapper">
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+        {% for descendant in descendants %}
+            <div class="group-wrapper align-self-start">
+                <a href="{% url 'manager:group-index' descendant.id %}">
+                    <div class="group-name-wrapper">
+                        {{ descendant.name }}
+                    </div>
+                    <div class="group-picture-wrapper">
+                    </div>
+                </a>
+            </div>
         {% endfor %}
     </div>
 </div>
 
 <div id="persons-wrapper" class="col-sm-12">
     <div class="row">
-        {% for _ in "xxxxxxxxx" %}
-            {% for person in persons %}
-                <div class="person-wrapper align-self-center">
-                    <a href="#">
-                        <div class="person-name-wrapper card card-block">
-                            {{ person }}
-                        </div>
-                    </a>
-                </div>
-            {% endfor %}
+        {% for person in persons %}
+            <div class="person-wrapper align-self-center">
+                <a href="#">
+                    <div class="person-name-wrapper card card-block">
+                        {{ person }}
+                    </div>
+                </a>
+            </div>
         {% endfor %}
     </div>
 </div>
+
+{% include 'manager/group_modal.html' %}
+{% load staticfiles %}
+<script src="{% static 'manager/js/group.js' %}"></script>
 
 {% endblock %}
