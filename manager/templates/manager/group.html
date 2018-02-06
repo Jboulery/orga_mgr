@@ -16,6 +16,9 @@
     </ul>
     <ul id="tree-path-actions" class="nav navbar-nav ml-auto col-sm-1">
         <li class="nav-item">
+            <a href="{% url 'manager:person-create' group_id=group.id %}"><button class="btn btn-sm btn-light"><i class="fas fa-user-plus"></i></button></a>
+        </li>&nbsp;
+        <li class="nav-item">
             <a href="#"><button class="btn btn-sm btn-light"><i class="fas fa-pencil-alt"></i></button></a>
         </li>&nbsp;
         <li class="nav-item">
@@ -49,7 +52,7 @@
                 <div class="person-wrapper align-self-center">
                     <a href="#">
                         <div class="person-name-wrapper card card-block">
-                            {{ person.user.username }}
+                            {{ person }}
                         </div>
                     </a>
                 </div>
