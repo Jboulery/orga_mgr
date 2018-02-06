@@ -87,3 +87,23 @@ def group_create(request):
             context = get_group_tree(group_id)
 
         return render(request, 'manager/group.html', context)
+
+
+def group_delete(request):
+    if request.method == 'POST':
+        group_id = int(request.POST['current_group_id'])
+        group = Group.objects.get(pk=group_id)
+        group_name = group.name
+        parent_id = group.parent.id
+
+        with transaction.atomic():
+            for descendant in list(reversed(group.get_descendants(include_self=True))):
+                for person in descendant.person_set.all():
+                    person.user.delete()
+                descendant.delete()
+            group.delete()
+
+        context = get_group_tree(parent_id)
+        context['success_message'] = 'Le groupe %s a bien été supprimé.' % group_name
+
+        return render(request, 'manager/group.html', context)

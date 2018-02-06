@@ -11,4 +11,6 @@ urlpatterns = [
     path('<int:group_id>/person/add/', views.person_create, name='person-create'),
     #/manager/group/add
     path('group/add/', views.group_create, name='group-create'),
+    #/manager/group/delete
+    path('group/delete', views.group_delete, name='group-delete'),
 ]

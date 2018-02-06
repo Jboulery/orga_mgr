@@ -13,7 +13,7 @@
                 <div>
                     {{ group.name }}&nbsp;
                     <a id="group-update-button" type="button" data-toggle="modal" data-target="#groupModal" href="#" data-group="{{group.name}}"><i class="fas fa-pencil-alt"></i></a>&nbsp;
-                    <a href="#"><i class="fas fa-times"></i></a>
+                    <a id="group-delete-button" type="button" data-toggle="modal" data-target="#groupDeleteModal" href="#"><i class="fas fa-times"></i></a>
                 </div>
             </div>
         </li>
@@ -29,6 +29,32 @@
 </nav>
 
 <div id="groups-wrapper" class="col-sm-12">
+    <div class="row messages_wrapper">
+        {% if warning_message %}
+        <div class="alert alert-warning alert-dismissible fade show col-sm-12" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ warning_message }}
+        </div>
+        {% endif %}
+        {% if success_message %}
+        <div class="alert alert-success alert-dismissible fade show col-sm-12" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ success_message }}
+        </div>
+        {% endif %}
+        {% if error_message %}
+        <div class="alert alert-danger alert-dismissible fade show col-sm-12" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ error_message }}
+        </div>
+        {% endif %}
+    </div>
     <div class="row">
         {% for descendant in descendants %}
             <div class="group-wrapper align-self-start">
