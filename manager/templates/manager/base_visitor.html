@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% load staticfiles %}
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'manager/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="{% static 'manager/css/fontawesome-all.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'manager/css/base.css' %}">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="{% static 'manager/js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'manager/js/bootstrap.min.js' %}"></script>
+
+    {% block special_static_files %}{% endblock %}
+    <title>{% block title %}MyOrga{% endblock %}</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-light">
+    <a class="navbar-brand" href="#">MyOrga</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topVisitorNavBar" aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="topVisitorNavBar">
+        <ul class="nav navbar-nav ml-auto">
+            <li class="nav-item {% block register %}{% endblock %}"><a href="#">Inscription</a></li>&nbsp; &nbsp;
+            <li class="nav-item {% block login %}{% endblock %}"><a href="#">Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
