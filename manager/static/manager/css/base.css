@@ -1,4 +1,14 @@
 /* Topbar */
+#topVisitorNavBar a{
+    color: white;
+    outline: 0;
+    text-decoration: none
+}
+
+#topVisitorNavBar a:hover{
+    color: #19198C;
+}
+
 .navbar{
     border-radius: 0;
 }

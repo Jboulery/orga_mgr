@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.views.generic import View
 #from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db import transaction
 
+from .forms import UserForm
 from .models import Organization, Group, Person
 from django.contrib.auth.models import User
 
@@ -107,3 +110,33 @@ def group_delete(request):
         context['success_message'] = 'Le groupe %s a bien été supprimé.' % group_name
 
         return render(request, 'manager/group.html', context)
+
+
+class UserFormView(View):
+    form_class = UserForm
+    template_name = 'manager/registration_form.html'
+
+    #New Account
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    #Process Form Data
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('1')
+
+        return render(request, self.template_name, {'form': form})

@@ -12,5 +12,7 @@ urlpatterns = [
     #/manager/group/add
     path('group/add/', views.group_create, name='group-create'),
     #/manager/group/delete
-    path('group/delete', views.group_delete, name='group-delete'),
+    path('group/delete/', views.group_delete, name='group-delete'),
+    #/manager/register
+    path('register', views.UserFormView.as_view(), name='register'),
 ]
