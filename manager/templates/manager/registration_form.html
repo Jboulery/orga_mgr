@@ -4,31 +4,87 @@
 
 {% block content %}
 <div class="container-fluid">
-    <div class="row" style="height: 100px;">
 
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-sm-12">
-            <div class="panel panel-default text-center">
-                <div class="panel-body">
-                    <h3>Créer un compte</h3>
-                    {% if error_message %}
-                        <p><strong>{{ error_message }}</strong></p>
-                    {% endif %}
-                    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% include 'manager/form_template.html' %}
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success">Submit</button>
-                        </div>
-                    </form>
+    {% if error_message %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{ error_message }}</strong>
+        </div>
+    {% endif %}
+    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div id="orga_registration_fields" class="col-sm-6 entity_registration_fields">
+                <h3 class="form-header-title">Votre Organisation</h3>
+                <div class="form-group">
+                    <label for="orga_name_field">Nom de l'organisation</label>
+                    <input id="orga_name_field" class="form-control" name="orga_name">
                 </div>
-                <div class="panel-footer">
-                    Déjà un compte? <a href="#">Cliquez ici</a> pour se connecter.
+                <div class="form-group">
+                    <label for="orga_activity_field">Activité</label>
+                    <input id="orga_activity_field" class="form-control" name="orga_activity">
+                </div>
+                <div class="form-group">
+                    <label for="orga_address_field">Adresse</label>
+                    <input id="orga_address_field" class="form-control" name="orga_address">
+                </div>
+            </div>
+            <div id="user_registration_fields" class="col-sm-6 entity_registration_fields">
+                <h3 class="form-header-title">Vos Informations Manager</h3>
+                <div class="form-group">
+                    <label for="user_firstname_field">Prénom</label>
+                    <input id="user_firstname_field" class="form-control" name="user_firstname">
+                </div>
+                <div class="form-group">
+                    <label for="user_lastname_field">Nom</label>
+                    <input id="user_lastname_field" class="form-control" name="user_lastname">
+                </div>
+                <div class="form-group">
+                    <label for="user_email_field">Email</label>
+                    <input type="Email" id="user_email_field" class="form-control" name="user_email">
+                </div>
+                <div class="form-group">
+                    <label for="user_password_field">Mot de Passe</label>
+                    <input type="password" id="user_password_field" class="form-control" name="user_password">
+                </div>
+                <div class="form-group">
+                    <label for="user_confirmation_password_field">Confirmation du Mot de Passe</label>
+                    <input type="password" id="user_confirmation_password_field" class="form-control" name="user_confirmation_password">
+                </div>
+                <div class="form-group">
+                    <label for="user_gender_field">Sexe</label>
+                    <fieldset id="user_gender_field" class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="user_gender" id="user_gender_m" value="H" checked>
+                                Homme
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="user_gender" id="user_gender_f" value="F">
+                                Femme
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="form-group">
+                    <label for="user_date_of_birth_field">Date de Naissance</label>
+                    <input type="date" id="user_date_of_birth_field" class="form-control" name="user_date_of_birth">
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="registration_submit_div" class="form-group">
+                    <button type="submit" class="btn btn-success col-sm-3">Créez mon compte</button>
+                </div>
+                <div id="registration_connection_div">
+                    Déjà un compte?&nbsp;<a href="#">Cliquez ici</a>&nbsp;pour vous connectez.
                 </div>
             </div>
         </div>
-    </div>
 
+    </form>
 </div>
 {% endblock %}

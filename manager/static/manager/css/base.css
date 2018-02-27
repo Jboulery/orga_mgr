@@ -212,3 +212,24 @@
 .person-wrapper:hover .person-name-wrapper{
     background: #EEEEEE;
 }
+
+/* Registration form */
+.form-header-title{
+    text-align: center;
+    margin: 5%;
+}
+
+.entity_registration_fields{
+    padding: 5%;
+}
+
+#user_registration_fields{
+    border-left: #EEEEEE 1px solid;
+}
+
+#registration_submit_div, #registration_connection_div{
+    margin: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

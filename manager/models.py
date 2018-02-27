@@ -35,7 +35,7 @@ class Person(models.Model):
     )
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     date_of_birth = models.DateField()
-    address = models.CharField(max_length=500, default='')
+    address = models.CharField(max_length=500, default='', null=True, blank=True)
     picture = models.URLField(default='', null=True, blank=True)
 
     def __str__(self):

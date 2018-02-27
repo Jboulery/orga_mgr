@@ -5,14 +5,14 @@ from . import views
 
 app_name = 'manager'
 urlpatterns = [
-    #/manager/<group_id>
+    #/<group_id>
     path('<int:group_id>/', views.group_index, name='group-index'),
-    #/manager/person/add
+    #/person/add
     path('<int:group_id>/person/add/', views.person_create, name='person-create'),
-    #/manager/group/add
+    #/group/add
     path('group/add/', views.group_create, name='group-create'),
-    #/manager/group/delete
+    #/group/delete
     path('group/delete/', views.group_delete, name='group-delete'),
-    #/manager/register
-    path('register', views.UserFormView.as_view(), name='register'),
+    #/register
+    path('register', views.RegistrationFormView.as_view(), name='register'),
 ]
