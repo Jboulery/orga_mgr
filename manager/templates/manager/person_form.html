@@ -4,59 +4,83 @@
 
 
 {% block content %}
+<nav id="tree-path-navbar" class="navbar navbar-expand-md navbar-light col-sm-12">
+    <ul id="tree-path" class="nav navbar-nav mr-auto">
+        <li class="nav-item">
+            <div class="row" id="tree-path-current-group">
+                <div>
+                    Création d'une Personne
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>
+
 <div class="container-fluid">
-    <form class="form-horizontal" role="form" method="post" action="#" enctype="multipart/form-data">
+    {% if error_message %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{ error_message }}</strong>
+        </div>
+    {% endif %}
+    <form style="padding: 50px;" role="form" method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
-        <div class="form-group">
-            <label class="col-sm-2" for="firstname_field">Prenom</label>
-            <input type="text" class="form-control col-sm-4" id="firstname_field" name="firstname" placeholder="Prenom">
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2" for="lastname_field">Nom</label>
-            <input type="text" class="form-control col-sm-4" id="lastname_field" name="lastname" placeholder="Nom">
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2" for="email_field">Adresse mail</label>
-            <input name="email" type="email" class="form-control col-sm-4" id="email_field" placeholder="Email">
-        </div>
-        <fieldset class="form-group col-sm-7">
-            <legend class="col-form-label pt-0">Genre</legend>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="gender" id="maleOption" value="H" checked>
-                <label class="form-check-label" for="maleOption">
-                    Homme
-                </label>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group row">
+                    <label for="firstname_field">Prenom</label>
+                    <input type="text" class="form-control" id="firstname_field" name="firstname" placeholder="Prenom">
+                </div>
+                <div class="form-group row">
+                    <label for="lastname_field">Nom</label>
+                    <input type="text" class="form-control" id="lastname_field" name="lastname" placeholder="Nom">
+                </div>
+                <div class="form-group row">
+                    <label for="email_field">Adresse mail</label>
+                    <input name="email" type="email" class="form-control" id="email_field" placeholder="Email">
+                </div>
+                <fieldset class="form-group row">
+                    <legend class="col-form-label pt-0">Genre</legend>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="maleOption" value="H" checked>
+                        <label class="form-check-label" for="maleOption">
+                            Homme
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="femaleOption" value="F">
+                        <label class="form-check-label" for="femaleOption">
+                            Femme
+                        </label>
+                    </div>
+                </fieldset>
+                <div class="form-group row">
+                    <label  for="date_of_birth_field">Jour de Naissance</label>
+                    <input class="form-control" id="date_of_birth_field" type="date" name="date_of_birth">
+                </div>
+                <div class="form-group row">
+                    <label for="address_field">Adresse</label>
+                    <input class="form-control" id="address_field" type="text" name="address" placeholder="Address">
+                </div>
+                <fieldset>
+                    <legend class="col-form-label pt-0">Droits d'utilisation</legend>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="is_manager_checkbox" name="is_manager">
+                        <label class="form-check-label" for="is_manager_checkbox">Manager</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="is_admin_checkbox" name="is_admin">
+                        <label class="form-check-label" for="is_admin_checkbox">Admin</label>
+                    </div>
+                </fieldset>
+                <input type="hidden" value="{{ group_id }}" name="group_id">
+                <br>
+                <div class="form-group row">
+                    <button type="submit" class="btn btn-success offset-sm-4 col-sm-4">Créer</button>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="gender" id="femaleOption" value="F">
-                <label class="form-check-label" for="femaleOption">
-                    Femme
-                </label>
-            </div>
-        </fieldset>
-        <div class="form-group">
-            <label  class="col-sm-2" for="date_of_birth_field">Jour de Naissance</label>
-            <input class="form-control col-sm-2" id="date_of_birth_field" type="date" name="date_of_birth">
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2" for="address_field">Adresse</label>
-            <input class="form-control col-sm-6" id="address_field" type="text" name="address" placeholder="Address">
-        </div>
-        <fieldset class="col-sm-6">
-            <legend class="col-form-label pt-0">Droits d'utilisation</legend>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="is_manager_checkbox" name="is_manager">
-                <label class="form-check-label" for="is_manager_checkbox">Manager</label>
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="is_admin_checkbox" name="is_admin">
-                <label class="form-check-label" for="is_admin_checkbox">Admin</label>
-            </div>
-        </fieldset>
-        <input type="hidden" value="{{ group_id }}" name="group_id">
-        <br>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary col-sm-2">Submit</button>
         </div>
     </form>
 </div>

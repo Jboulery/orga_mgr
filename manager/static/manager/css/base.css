@@ -11,6 +11,7 @@
 
 .navbar{
     border-radius: 0;
+    height: 72px;
 }
 
 .navbar-light{
@@ -46,7 +47,7 @@
     z-index: 1;
     position: absolute;
     width: 0;
-    height: 100%;
+    height: calc(100% - 72px);
     overflow-y: hidden;
     background: #FDFDFD;
     border-right: 1px solid #eeeeee;
@@ -89,7 +90,7 @@
 /* Main Content */
 #page-content-wrapper{
     width:100%;
-    height: 100%;
+    height: calc(100% - 72px);
     position: absolute;
     background: #F8F8F8;
 }
