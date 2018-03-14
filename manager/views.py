@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from .forms import RegistrationForm, LoginForm
 from .models import Organization, Group, Person
 from django.contrib.auth.models import User
+import json
 
 
 def get_group_tree(group_id):
@@ -73,42 +74,49 @@ def group_create(request):
     if request.method == 'POST':
         if request.POST['operation_type'] == 'create':
             name = request.POST['group_name']
-            parent_id = int(request.POST['current_group_id'])
+            parent_id = int(request.POST['selected_group_id'])
             parent = Group.objects.get(pk=parent_id)
             orga = parent.organization
 
             Group.objects.create(name=name, parent=parent, organization=orga)
 
-            context = get_group_tree(parent_id)
+            return group_index(request, parent_id)
 
         elif request.POST['operation_type'] == 'update':
             name = request.POST['group_name']
-            group_id = int(request.POST['current_group_id'])
+            group_id = int(request.POST['selected_group_id'])
             group = Group.objects.get(pk=group_id)
             group.name = name
             group.save()
 
-            context = get_group_tree(group_id)
-
-        return render(request, 'manager/group.html', context)
+            return group_index(request, group_id)
 
 
 def group_delete(request):
     if request.method == 'POST':
-        group_id = int(request.POST['current_group_id'])
-        group = Group.objects.get(pk=group_id)
-        group_name = group.name
-        parent_id = group.parent.id
+        entities = json.loads(request.POST['to_delete_entities'])
+        try:
+            parent_id = Group.objects.get(pk=int(entities['groups'][0])).parent.id
+        except:
+            try:
+                parent_id = Person.objects.get(pk=int(entities['persons'][0])).group.id
+            except:
+                return render(request, 'manager/group.html', get_group_tree(request.user.person.group.id))
 
         with transaction.atomic():
-            for descendant in list(reversed(group.get_descendants(include_self=True))):
-                for person in descendant.person_set.all():
-                    person.user.delete()
-                descendant.delete()
-            group.delete()
+            for person_id in entities['persons']:
+                person = Person.objects.get(pk=int(person_id))
+                person.user.delete()
+            for group_id in entities['groups']:
+                group = Group.objects.get(pk=int(group_id))
+                for descendant in list(reversed(group.get_descendants(include_self=True))):
+                    for person in descendant.person_set.all():
+                        person.user.delete()
+                    descendant.delete()
+                group.delete()
 
         context = get_group_tree(parent_id)
-        context['success_message'] = 'Le groupe %s a bien été supprimé.' % group_name
+        context['success_message'] = 'Les éléments ont bien été supprimés.'
 
         return render(request, 'manager/group.html', context)
 

@@ -12,23 +12,17 @@
             <div class="row" id="tree-path-current-group">
                 <div>
                     {% if not group.is_root_node %}
-                        <a id="current-active-group" data-entity-id="{{group.parent.id}}" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
-                        <a id="group-update-button" type="button" data-toggle="modal" data-target="#groupModal" href="#""><i class="fas fa-pencil-alt"></i></a>&nbsp;
-                        <a id="group-delete-button" type="button" data-toggle="modal" data-target="#groupDeleteModal" href="#"><i class="fas fa-times"></i></a>
+                        <a id="current-active-group" data-group-id="{{group.id}}" data-entity-id="{{group.parent.id}}" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
                     {% else %}
-                        <a id="current-organization" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
+                        <a id="current-organization" data-group-id="{{group.id}}" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
                     {% endif %}
+                    <a id="person-create-button" href="{% url 'manager:person-create' group_id=group.id %}"><i class="fas fa-user-plus"></i></a>&nbsp;
+                    <a id="group-create-button" type="button" data-toggle="modal" data-target="#groupModal" href="#"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
         </li>
     </ul>
     <ul id="tree-path-actions" class="nav navbar-nav ml-auto col-sm-3 justify-content-end">
-        <li class="nav-item">
-            <div>
-                <a id="group-create-button" type="button" data-toggle="modal" data-target="#groupModal" href="#"><i class="fas fa-plus"></i></a>&nbsp;
-                <a href="{% url 'manager:person-create' group_id=group.id %}"><i class="fas fa-user-plus"></i></a>
-            </div>
-        </li>&nbsp;
     </ul>
 </nav>
 

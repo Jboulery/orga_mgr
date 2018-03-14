@@ -7,12 +7,14 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body justify-content-center">
-                <p class="text-danger" style="text-align: center;">La suppression du groupe entraînera la suppression de tout son contenu !</p>
-                <p style="text-align: center;"><strong>Etes-vous sûr de vouloir supprimer {{group.name}} ?</strong></p>
+            <div id="entities-delete-modal-body" class="modal-body justify-content-center">
+                <p class="text-danger" style="text-align: center;">La suppression d'un groupe entraîne la suppression de tout son contenu !</p>
+                <p style="text-align: center;"><strong>Etes-vous sûr de vouloir supprimer les éléments suivants ?</strong></p>
+                <ul id="to-delete-entities-names">
+                </ul>
                 <form role="form" id="group-delete-form" class="form-horizontal" action="{% url 'manager:group-delete' %}" method="post">
                     {% csrf_token %}
-                    <input type="hidden" name="current_group_id" value="{{ group.id }}">
+                    <input id="to-delete-entities-field" type="hidden" name="to_delete_entities" value="">
                 </form>
             </div>
             <div class="modal-footer">

@@ -110,16 +110,15 @@
     color: white;
 }
 
-#group-update-button, #group-delete-button{
+#person-create-button, #group-create-button{
     text-decoration: none;
     color: white;
     font-size: 18px;
     outline: 0;
 }
 
-#group-update-button:hover, #group-delete-button:hover{
+#person-create-button:hover, #group-create-button:hover{
     color: #19198C;
-    font-size: 18px;
 }
 
 #current-active-group{
@@ -181,7 +180,7 @@
     z-index: 1;
 }
 
-.group-wrapper:hover{
+.group-wrapper:hover, .group-wrapper.active{
     background: white;
     border: #2196F3 2px solid;
 }
@@ -209,12 +208,12 @@
     border-radius: 0 0 10px 10px;
 }
 
-.group-wrapper:hover .group-name-wrapper{
+.group-wrapper:hover .group-name-wrapper, .group-wrapper.active .group-name-wrapper{
     color: #2196F3;
     border-bottom: #2196F3 2px solid;
 }
 
-.group-wrapper:hover .group-picture-wrapper{
+.group-wrapper:hover .group-picture-wrapper, .group-wrapper.active .group-picture-wrapper{
     height: 116px;
 }
 
@@ -239,7 +238,7 @@
     font: Roboto, sans-serif;
 }
 
-.person-wrapper:hover .person-name-wrapper{
+.person-wrapper:hover .person-name-wrapper, .person-wrapper.active .person-name-wrapper{
     background: #EEEEEE;
 }
 
