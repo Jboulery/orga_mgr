@@ -84,9 +84,7 @@
     </div>
 </div>
 
-{% if not group.is_root_node %}
-    {% include 'manager/group_deletion_modal.html' %}
-{% endif %}
+{% include 'manager/group_deletion_modal.html' %}
 {% include 'manager/group_creation_modal.html' %}
 {% load staticfiles %}
 <script src="{% static 'manager/js/group.js' %}"></script>

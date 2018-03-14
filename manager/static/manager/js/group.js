@@ -5,6 +5,11 @@ $('#group-create-button').click(function(e){
     $('#update-modal-selected-group-id').val($('#current-active-group, #current-organization').first().data('group-id'));
 });
 
+$('.group-wrapper').dblclick(function(e){
+    e.preventDefault();
+    location.href = $(this).find('a').first().attr('href');
+});
+
 //Groups and persons selection
 $('.group-wrapper, .person-wrapper').click(function(e){
     e.preventDefault();
@@ -12,6 +17,7 @@ $('.group-wrapper, .person-wrapper').click(function(e){
     $('#to-delete-entities-names').remove();
     $('#entities-delete-modal-body').append("<ul id='to-delete-entities-names'></ul>")
     var entities_id_list = {'groups': [], 'persons': []}
+    //Update the delete modal fields
     $('.group-wrapper.active, .person-wrapper.active').each(function(){
         if($(this).data('type') == 'group'){
             entities_id_list.groups.push($(this).data('entity-id'));
