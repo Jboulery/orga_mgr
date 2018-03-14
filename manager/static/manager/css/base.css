@@ -109,15 +109,32 @@
     color: white;
 }
 
-#tree-path-current-group a{
+#group-update-button, #group-delete-button{
+    text-decoration: none;
     color: white;
     font-size: 18px;
     outline: 0;
 }
 
-#tree-path-current-group a:hover{
+#group-update-button:hover, #group-delete-button:hover{
     color: #19198C;
     font-size: 18px;
+}
+
+#current-active-group{
+    z-index: 1;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    outline: 0;
+}
+
+#current-organization{
+    z-index: 1;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    outline: 0;
 }
 
 #tree-path-line{
@@ -160,6 +177,22 @@
     height: 150px;
     border-radius: 10px;
     margin: 15px;
+    z-index: 1;
+}
+
+.group-wrapper:hover{
+    background: white;
+    border: #2196F3 2px solid;
+}
+
+.drag-ui-hover-wrapper{
+    box-shadow: 0 0 10px black;
+}
+
+.drag-ui-hover-parent{
+    border: #000080 1px solid;
+    border-radius: 3px;
+    box-shadow: 0 0 10px black;
 }
 
 .group-name-wrapper{
@@ -173,11 +206,6 @@
     background: #eeeeee;
     height: 118px;
     border-radius: 0 0 10px 10px;
-}
-
-.group-wrapper:hover{
-    background: white;
-    border: #2196F3 2px solid;
 }
 
 .group-wrapper:hover .group-name-wrapper{
@@ -198,6 +226,7 @@
     width: 250px;
     height: 50px;
     margin: 15px;
+    z-index: 1;
 }
 
 .person-name-wrapper{
@@ -213,7 +242,7 @@
     background: #EEEEEE;
 }
 
-/* Registration form */
+/* Registration and Login forms */
 .form-header-title{
     text-align: center;
     margin: 5%;
@@ -227,9 +256,17 @@
     border-left: #EEEEEE 1px solid;
 }
 
-#registration_submit_div, #registration_connection_div{
+#registration_submit_div, #registration_connection_div, #login_submit_div, #login_connection_div{
     margin: 3%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#login_form_fields{
+    padding-top: 10em;
+}
+
+#login_form_fields > div{
+    padding: 1em;
 }

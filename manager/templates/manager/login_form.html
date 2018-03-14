@@ -1,0 +1,39 @@
+{% extends 'manager/base_visitor.html' %}
+{% block title %}Login{% endblock %}
+{% block register %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    {% if error_message %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <strong>{{ error_message }}</strong>
+        </div>
+    {% endif %}
+    <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row justify-content-center">
+            <div id="login_form_fields" class="col-sm-4">
+                <div class="form-group">
+                    <label for="login_user_email_field">Email</label>
+                    <input id="login_user_email_field" class="form-control" type="email" name="login_user_email">
+                </div>
+                <div class="form-group">
+                    <label for="login_user_password_field">Mot de passe</label>
+                    <input id="login_user_password_field" class="form-control" type="password" name="login_user_password">
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div id="login_submit_div" class="form-group">
+                    <button type="submit" class="btn btn-success col-sm-3">Login</button>
+                </div>
+                <div id="login_connection_div">
+                    Pas de compte ?&nbsp;<a href="{% url 'manager:register' %}">Cliquez ici</a>&nbsp;pour vous enregistrer.
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

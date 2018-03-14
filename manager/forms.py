@@ -15,3 +15,8 @@ class RegistrationForm(forms.Form):
     user_confirmation_password = forms.CharField(widget=forms.PasswordInput)
     user_gender = forms.CharField(max_length=1)
     user_date_of_birth = forms.DateField()
+
+
+class LoginForm(forms.Form):
+    login_user_email = forms.CharField(max_length=200)
+    login_user_password = forms.CharField(widget=forms.PasswordInput)

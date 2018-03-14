@@ -28,8 +28,8 @@
 
     <div class="collapse navbar-collapse" id="topVisitorNavBar">
         <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item {% block register %}{% endblock %}"><a href="#">Inscription</a></li>&nbsp; &nbsp;
-            <li class="nav-item {% block login %}{% endblock %}"><a href="#">Login</a></li>
+            <li class="nav-item {% block register %}{% endblock %}"><a href="{% url 'manager:register' %}">Inscription</a></li>&nbsp; &nbsp;
+            <li class="nav-item {% block login %}{% endblock %}"><a href="{% url 'manager:login' %}">Login</a></li>
         </ul>
     </div>
 </nav>

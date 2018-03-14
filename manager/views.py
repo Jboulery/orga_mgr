@@ -3,8 +3,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 #from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db import transaction
+from django.http import JsonResponse
 
-from .forms import RegistrationForm
+from .forms import RegistrationForm, LoginForm
 from .models import Organization, Group, Person
 from django.contrib.auth.models import User
 
@@ -112,6 +113,28 @@ def group_delete(request):
         return render(request, 'manager/group.html', context)
 
 
+def group_moveto(request):
+    if request.method == 'POST':
+        entity = request.POST['entity']
+        entity_id = int(request.POST['entity_id'])
+        target_id = int(request.POST['target_id'])
+        target = get_object_or_404(Group, pk=target_id)
+
+        if entity == 'group':
+            group = get_object_or_404(Group, pk=entity_id)
+            group.move_to(target, position='first-child')
+            group.save()
+            response = JsonResponse({'success': True})
+            return response
+
+        elif entity == 'person':
+            person = get_object_or_404(Person, pk=entity_id)
+            person.group = target
+            person.save()
+            response = JsonResponse({'success': True})
+            return response
+
+
 class RegistrationFormView(View):
     form_class = RegistrationForm
     template_name = 'manager/registration_form.html'
@@ -135,7 +158,7 @@ class RegistrationFormView(View):
                 #User info
                 user_firstname = form.cleaned_data['user_firstname']
                 user_lastname = form.cleaned_data['user_lastname']
-                user_email = form.cleaned_data['user_email']
+                user_email = form.cleaned_data['user_email'].lower()
                 user_password = form.cleaned_data['user_password']
                 user_conf_password = form.cleaned_data['user_confirmation_password']
                 user_gender = form.cleaned_data['user_gender']
@@ -147,7 +170,7 @@ class RegistrationFormView(View):
                 orga = Organization.objects.create(name=orga_name, activity=orga_activity, address=orga_address)
                 group = Group.objects.create(name=orga_name, organization=orga)
 
-                username = (user_firstname[0].lower() + user_lastname).lower()
+                username = user_email
                 password = User.objects.make_random_password()
 
                 user = User.objects.create_user(username=username, password=password, email=user_email,
@@ -157,21 +180,47 @@ class RegistrationFormView(View):
                 person = Person.objects.create(user=user, group=group, is_manager=True, is_admin=True,
                                                gender=user_gender, date_of_birth=user_dob)
 
-                print('ENREGISTREMENT TERMINE')
-
                 user = authenticate(username=username, password=user_password)
 
                 if user is not None:
-                    print(user)
                     if user.is_active:
-                        print('USER IS ACTIVE')
                         login(request, user)
-                        print('LOGIN EFFECTUE')
                         context = get_group_tree(group.id)
                         return render(request, 'manager/group.html', context)
                     else:
-                        print('USER IS NOT ACTIVE')
-                        return render(request, self.template_name, {'form': form})
+                        return render(request, self.template_name,
+                                      {'form': form, 'error_message': 'Votre compte est désactivé, veuillez contacter un administrateur du site'})
 
-        print('USER IS NONE')
+        return render(request, self.template_name,
+                      {'form': form, 'error_message': "Les informations fournies n'ont pas permis de vous enregistrer"})
+
+
+class LoginFormView(View):
+    form_class = LoginForm
+    template_name = 'manager/login_form.html'
+
+    def get(self, request):
+        form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            email = form.cleaned_data['login_user_email']
+            password = form.cleaned_data['login_user_password']
+
+            user = authenticate(username=email, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    group = user.person.group
+                    context = get_group_tree(group.id)
+                    return render(request, 'manager/group.html', context)
+                else:
+                    return render(request, self.template_name,
+                                  {'form': form, 'error_message': 'Votre compte est désactivé, veuillez contacter un administrateur du site'})
+
+        return render(request, self.template_name,
+                      {'form': form, 'error_message': "Les informations fournies sont incorrectes"})

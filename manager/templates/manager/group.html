@@ -11,9 +11,13 @@
             </div>
             <div class="row" id="tree-path-current-group">
                 <div>
-                    {{ group.name }}&nbsp;
-                    <a id="group-update-button" type="button" data-toggle="modal" data-target="#groupModal" href="#" data-group="{{group.name}}"><i class="fas fa-pencil-alt"></i></a>&nbsp;
-                    <a id="group-delete-button" type="button" data-toggle="modal" data-target="#groupDeleteModal" href="#"><i class="fas fa-times"></i></a>
+                    {% if not group.is_root_node %}
+                        <a id="current-active-group" data-entity-id="{{group.parent.id}}" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
+                        <a id="group-update-button" type="button" data-toggle="modal" data-target="#groupModal" href="#""><i class="fas fa-pencil-alt"></i></a>&nbsp;
+                        <a id="group-delete-button" type="button" data-toggle="modal" data-target="#groupDeleteModal" href="#"><i class="fas fa-times"></i></a>
+                    {% else %}
+                        <a id="current-organization" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
+                    {% endif %}
                 </div>
             </div>
         </li>
@@ -28,64 +32,68 @@
     </ul>
 </nav>
 
-<div id="groups-wrapper" class="col-sm-12">
-    <div class="row messages_wrapper">
-        {% if warning_message %}
-        <div class="alert alert-warning alert-dismissible fade show col-sm-12" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{ warning_message }}
-        </div>
-        {% endif %}
-        {% if success_message %}
-        <div class="alert alert-success alert-dismissible fade show col-sm-12" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{ success_message }}
-        </div>
-        {% endif %}
-        {% if error_message %}
-        <div class="alert alert-danger alert-dismissible fade show col-sm-12" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            {{ error_message }}
-        </div>
-        {% endif %}
-    </div>
-    <div class="row">
-        {% for descendant in descendants %}
-            <div class="group-wrapper align-self-start">
-                <a href="{% url 'manager:group-index' descendant.id %}">
-                    <div class="group-name-wrapper">
-                        {{ descendant.name }}
-                    </div>
-                    <div class="group-picture-wrapper">
-                    </div>
-                </a>
+<div id="groups-and-persons-wrapper" class="col-sm-12">
+    <div id="groups-wrapper" data-moveto="{% url 'manager:group-moveto' %}" class="col-sm-12">
+        <div class="row messages_wrapper">
+            {% if warning_message %}
+            <div class="alert alert-warning alert-dismissible fade show col-sm-12" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ warning_message }}
             </div>
-        {% endfor %}
+            {% endif %}
+            {% if success_message %}
+            <div class="alert alert-success alert-dismissible fade show col-sm-12" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ success_message }}
+            </div>
+            {% endif %}
+            {% if error_message %}
+            <div class="alert alert-danger alert-dismissible fade show col-sm-12" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {{ error_message }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="row">
+            {% for descendant in descendants %}
+                <div class="group-wrapper align-self-start" data-type="group" data-entity-id="{{descendant.id}}">
+                    <a href="{% url 'manager:group-index' descendant.id %}">
+                        <div class="group-name-wrapper">
+                            {{ descendant.name }}
+                        </div>
+                        <div class="group-picture-wrapper">
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="persons-wrapper" class="col-sm-12">
+        <div class="row">
+            {% for person in persons %}
+                <div class="person-wrapper align-self-center" data-type="person" data-entity-id="{{person.id}}">
+                    <a href="#">
+                        <div class="person-name-wrapper card card-block">
+                            {{ person }}
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
-<div id="persons-wrapper" class="col-sm-12">
-    <div class="row">
-        {% for person in persons %}
-            <div class="person-wrapper align-self-center">
-                <a href="#">
-                    <div class="person-name-wrapper card card-block">
-                        {{ person }}
-                    </div>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
-</div>
-
-{% include 'manager/group_modal.html' %}
+{% if not group.is_root_node %}
+    {% include 'manager/group_deletion_modal.html' %}
+{% endif %}
+{% include 'manager/group_creation_modal.html' %}
 {% load staticfiles %}
 <script src="{% static 'manager/js/group.js' %}"></script>
-
 {% endblock %}
