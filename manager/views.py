@@ -32,6 +32,13 @@ def group_index(request, group_id):
     return render(request, 'manager/group.html', context)
 
 
+def person_index(request, person_id):
+    person = get_object_or_404(Person, pk=int(person_id))
+    context = get_group_tree(person.group.id)
+    context['person'] = person
+    return render(request, 'manager/person.html', context)
+
+
 def person_create(request, group_id):
     if request.method == 'GET':
         context = {'group_id': group_id}
@@ -130,7 +137,7 @@ def group_moveto(request):
 
         if entity == 'group':
             group = get_object_or_404(Group, pk=entity_id)
-            group.move_to(target, position='first-child')
+            group.move_to(target, position='last-child')
             group.save()
             response = JsonResponse({'success': True})
             return response

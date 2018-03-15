@@ -105,7 +105,7 @@
     padding-left: 15px;
 }
 
-#tree-path-current-group{
+#second-navbar-text{
     font-size: 24px;
     color: white;
 }
@@ -152,6 +152,7 @@
     color: white;
     font-size: 22px;
     outline: 0;
+    margin: 2px;
 }
 
 #tree-path-actions a:hover{
@@ -269,4 +270,18 @@
 
 #login_form_fields > div{
     padding: 1em;
+}
+
+/* Person Information Display */
+.person-table-title, #person-events-table-title{
+    font-size: 24px;
+    margin: 10px;
+}
+
+#person-picture-wrapper{
+    background: white;
+    width: 250px;
+    height: 250px;
+    float: none;
+    margin: 50px auto;
 }

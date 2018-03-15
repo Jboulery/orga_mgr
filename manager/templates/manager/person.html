@@ -1,0 +1,122 @@
+{% extends 'manager/base.html' %}
+{% block title %}Fiche de {{person}}{% endblock %}
+{% block manager %}active{% endblock %}
+
+{% block content %}
+<nav id="tree-path-navbar" class="navbar navbar-expand-md navbar-light col-sm-12">
+    <ul id="tree-path" class="nav navbar-nav mr-auto">
+        <li class="nav-item">
+            <div class="row" id="tree-path-line">
+                {% for ancestor in ancestors %}<a href="{% url 'manager:group-index' ancestor.id %}" >{{ ancestor.name }}</a>&nbsp; &gt; &nbsp;{% endfor %}
+                <a href="{% url 'manager:group-index' group.id %}" >{{ group.name }}</a> &nbsp; &gt; &nbsp;
+            </div>
+            <div class="row" id="second-navbar-text">
+                <div>
+                    <a id="current-active-group" data-entity-id="{{person.id}}" href="{% url 'manager:person-index' person.id %}">{{ person }}&nbsp;</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    <ul id="tree-path-actions" class="nav navbar-nav ml-auto col-sm-3 justify-content-end">
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-8" id="person-info-wrapper">
+        <div class="person-table-title">
+            Informations générales
+        </div>
+        <table class="table table-striped" id="person-general-info-table">
+            <colgroup>
+                <col class="col-sm-4"></col>
+                <col class="col-sm-6"></col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row">
+                        Prénom
+                    </th>
+                    <td>
+                        {{ person.user.first_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        Nom
+                    </th>
+                    <td>
+                        {{ person.user.last_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        Sexe
+                    </th>
+                    <td>
+                        {{ person.gender }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        Date de Naissance
+                    </th>
+                    <td>
+                        {{ person.date_of_birth }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="person-table-title">
+            Contact
+        </div>
+        <table class="table table-striped" id="person-contact-info-table">
+            <colgroup>
+                <col class="col-sm-4"></col>
+                <col class="col-sm-6"></col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <th scope="row">
+                        Email
+                    </th>
+                    <td>
+                        {{ user.email }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        Téléphone
+                    </th>
+                    <td>
+                        {{ person.phone }}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        Adresse
+                    </th>
+                    <td>
+                        {{ person.address }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <div class="col-sm-4" id="person-activity-wrapper">
+            <div id="person-picture-wrapper">
+                <!-- img -->
+            </div>
+            <div class="offset-sm-2" id="person-calendar-wrapper">
+                <div id="person-events-table-title">
+                    Prochains événements
+                </div>
+                <table class="table">
+                    <!-- Calendar events -->
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

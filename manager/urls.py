@@ -11,6 +11,8 @@ urlpatterns = [
     path('register', views.RegistrationFormView.as_view(), name='register'),
     #/<group_id>
     path('<int:group_id>/', views.group_index, name='group-index'),
+    #/person/<person_id>
+    path('person/<int:person_id>/', views.person_index, name='person-index'),
     #/person/add
     path('<int:group_id>/person/add/', views.person_create, name='person-create'),
     #/group/add

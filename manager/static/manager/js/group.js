@@ -5,7 +5,7 @@ $('#group-create-button').click(function(e){
     $('#update-modal-selected-group-id').val($('#current-active-group, #current-organization').first().data('group-id'));
 });
 
-$('.group-wrapper').dblclick(function(e){
+$('.group-wrapper, .person-wrapper').dblclick(function(e){
     e.preventDefault();
     location.href = $(this).find('a').first().attr('href');
 });

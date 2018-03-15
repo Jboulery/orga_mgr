@@ -9,7 +9,7 @@
             <div class="row" id="tree-path-line">
                 {% for ancestor in ancestors %}<a href="{% url 'manager:group-index' ancestor.id %}" >{{ ancestor.name }}</a>&nbsp; &gt; &nbsp;{% endfor %}
             </div>
-            <div class="row" id="tree-path-current-group">
+            <div class="row" id="second-navbar-text">
                 <div>
                     {% if not group.is_root_node %}
                         <a id="current-active-group" data-group-id="{{group.id}}" data-entity-id="{{group.parent.id}}" href="{% url 'manager:group-index' group.id %}">{{ group.name }}&nbsp;</a>
@@ -73,7 +73,7 @@
         <div class="row">
             {% for person in persons %}
                 <div class="person-wrapper align-self-center" data-type="person" data-entity-id="{{person.id}}">
-                    <a href="#">
+                    <a href="{% url 'manager:person-index' person.id %}">
                         <div class="person-name-wrapper card card-block">
                             {{ person }}
                         </div>
